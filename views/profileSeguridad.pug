@@ -1,0 +1,75 @@
+extends profile
+block content2
+    form(class="col s12")
+        div(class="row card" style="padding:1.5rem;")
+            div(class="col s12 offset-s4")
+                h2 SEGURIDAD
+            div(class="col s12")
+                h3 Cambiar contraseña
+                a(class="waves-effect modal-trigger waves-light btn" data-target="modal1")
+                    i(class="material-icons left") create
+                    span Cambiar
+                div(id="modal1" class="modal")
+                    form(action="/profile/seguridad/cambiarPassword", method="post")
+                        div(class="modal-content")
+                            div(class="row")
+                                div(class="input-field col s12")
+                                    h4 Contraseña antigua
+                                div(class="input-field col s12")
+                                    input(id="password" type="password" class="validate" name="passwordAntigua")
+                                    label(for="password") Old password
+                                div(class="input-field col s12")
+                                    h4 Contraseña nueva
+                                div(class="input-field col s12")
+                                    input(id="password2" type="password" class="validate" name="passwordNueva")
+                                    label(for="password2") New password
+                        div(class="modal-footer")
+                            button(type="submit" class="modal-close waves-effect waves-green btn-flat" formmethod="post" formaction="/profile/seguridad/cambiarPassword") Aceptar 
+            div(class = "col s12")
+                h3 Pregunta secreta
+            div(class = "input-field col s6")
+                i(class="material-icons prefix") question_answer
+                input(id="icon_pregunta" value="¿Cual es tu animal favorito?" disabled  type="text" class="validate")
+                label(for="icon_pregunta") Pregunta secreta
+            div(class = "input-field col s6")
+                i(class="material-icons prefix") question_answer
+                input(id="icon_respuesta" value="Zorro" disabled  type="text" class="validate")
+                label(for="icon_respuesta") Respuesta
+            div(class = "col s12 offset-s9")
+                a(class="waves-effect waves-light btn modal-trigger" data-target="modal3")
+                    i(class="material-icons left") create
+                    span Cambiar respuesta
+                div(id="modal3" class="modal")
+                    form(action="/profile/seguridad/cambioPregunta", method="post")
+                        div(class="modal-content")
+                            div(class="row")
+                                div(class="input-field col s12")
+                                    h4 Nueva pregunta
+                                div(class="input-field col s12")
+                                    select
+                                        option(value="" disabled selected) Elige una opcion
+                                        option(value="1") ¿Cual es tu animal favorito?
+                                        option(value="2") ¿Cual es el nombre de tu primera mascota?
+                                        option(value="3") ¿AHHHHH?
+                                    label Pregunta
+                                div(class="input-field col s12")
+                                    h4 Nueva respuesta
+                                div(class="input-field col s12")
+                                    input(id="respuesta" type="text" class="validate")
+                                    label(for="respuesta") Respuesta
+                            button(class="btn waves-effect waves-light" type="submit" name="action")
+                                span Cambiar
+                                i(class="material-icons right") send
+            div(class = "col s12")
+                h3 Eliminar cuenta
+                a(class="waves-effect waves-light btn modal-trigger" data-target="modal4")
+                    i(class="material-icons left") delete
+                    span Eliminar
+                div(id="modal4" class="modal")
+                    div(class="modal-content")
+                        div(class="row")
+                            div(class="input-field col s12")
+                                h4 ¿Seguro que desea eliminar su cuenta?
+                                p Al eliminar su cuenta se perdera toda su informacion y no podra recuperarla. ¿Esta seguro de realizar esta accion?
+                    div(class="modal-footer")
+                        a(href="#!" class="modal-close waves-effect waves-green btn-flat") Acepto
