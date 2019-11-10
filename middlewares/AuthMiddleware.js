@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+//const mongoose = require('mongoose');
 const User = require("../models/users");
 const bcrypt = require('bcrypt');
 const AuthMiddleware = {};

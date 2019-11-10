@@ -15,6 +15,11 @@ const {mongodb}=require('./configs/keys');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var profileRouter = require('./routes/profile');
+var foroRouter = require('./routes/foro');
+var recordatorioRouter = require('./routes/recordatorio');
+var publicacionRouter = require('./routes/publicaciones');
+var publicacionHilosRouter = require('./routes/publicacionHilos');
 
 var app = express();
 require('./configs/database');
@@ -50,6 +55,11 @@ app.use((req,res,next)=>{
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/profile',profileRouter);
+app.use('/foro',foroRouter);
+app.use('/recordatorio',recordatorioRouter);
+app.use('/api/play',publicacionHilosRouter);
+app.use('/api/post',publicacionRouter); 
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
