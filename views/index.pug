@@ -1,0 +1,171 @@
+extend layout
+block content 
+  
+  if !session.user
+    nav
+      .nav-wrapper(style = "background-color: #212129")
+        a.navbar_color(style='margin-left: 1em; font-size: 1.5em')
+          i.fas.fa-crow
+          | Goth 
+        ul(id="nav-mobile" class="right hide-on-med-and-down")
+          li
+            a(class="waves-effect waves-light btn modal-trigger" data-target="modal1") signin
+            div(id="modal1" class="modal")
+              div(class="modal-content")
+                
+                form(method='POST' action='users/signin')
+                  div(class="input-field")
+                      input(id="email" type='email' name='email' require value=email?email:'')
+                      label(for="email" style="font-size:1rem") Email
+                  
+                  div(class="input-field")
+                      input(id="pass" type='password' name='password')
+                      label(for="pass" style="font-size:1rem") Password
+                  br
+                  input(type='submit' value='Entrar') 
+          li
+            a(class="waves-effect waves-light btn modal-trigger" data-target="modal2") signup
+            div(id="modal2" class="modal")
+              div(class="modal-content")
+                form(method='POST' action='users/signup')
+                  div(class="input-field")
+                    input(id="name" type='text' name='name' required)
+                    label(for="name" style="font-size:1rem") Nombre
+                  div(class="input-field")
+                    input(id="apellido" type='text' name='apellido' required)
+                    label(for="apellido" style="font-size:1rem") Apellido
+
+                  .input-field.col.s12
+                    select(id="sexo" name='sexo' required)
+                      option(value='', disabled='', selected='') Sexo
+                      option(value='Masculino') Masculino
+                      option(value='Femenino') Femenino 
+
+                  div(class="input-field")
+                    input(id="username" type='text' name='username' required)
+                    label(for="username" style="font-size:1rem") Username
+
+                  div(class="input-field")
+                    input(id="email1" type='email' name='email' require value=email?email:'')
+                    label(for="email1" style="font-size:1rem") Email
+                
+                  div(class="input-field")
+                      input(id="pass1" type='password' name='password' required)
+                      label(for="pass1" style="font-size:1rem") Password
+
+                  .input-field.col.s12
+                    select(id="pregunta" name='pregunta' required)
+                      option(value='', disabled='', selected='') Pregunta de seguridad
+                      option(value='Nombre de mascota de la infancia?') Nombre de mascota de la infancia?
+                      option(value='Nombre de madre?') Nombre de madre?
+                      option(value='Nombre de padre?') Nombre de padre?
+                      option(value='Hobbie favorito?') Hobbie favorito?
+
+                  div(class="input-field")
+                      input(id="respuesta" type='text' name='respuesta' required)
+                      label(for="respuesta" style="font-size:1rem") Respuesta
+
+                  .input-field.col.s12
+                    select(id="cuenta" name='cuenta' required)
+                      option(value='', disabled='', selected='') Tipo de cuenta
+                      option(value='normal') Normal
+                      option(value='musica') Lector 
+                  br
+                  input(type='submit' value='Registrar')
+    
+    .carousel.carousel-slider.center(style='height:33rem;')
+      .carousel-item
+        img(src="/images/death.jpg" style="width=100%" height="100%")
+      .carousel-item
+        img(src="/images/lilith.jpg" style="width=100%" height="100%")
+      .carousel-item        
+        img(src="/images/panic.jpg" style="width=100%" height="100%")
+      .carousel-item        
+        img(src="/images/kda.jpg" style="width=100%" height="100%")
+      .carousel-item        
+        img(src="/images/5c0.jpg" style="width=100%" height="100%")
+      ul.indicators
+        li.indicator-item
+        li.indicator-item
+        li.indicator-item
+        li.indicator-item
+        li.indicator-item
+    footer(class="page-footer" style = "background-color: #212129")
+      .container
+        .row
+          .col.l6.s12(style="font-size=10px")
+              h5 Contactos
+              p
+                a.grey-text.text-lighten-3(href='https://www.facebook.com/AleCamposM') Contacto 1: Hector Alejandro
+              p
+                a.grey-text.text-lighten-3(href='https://www.facebook.com/mario.deleon2') Contacto 2: Mario De Leon
+              p
+                a.grey-text.text-lighten-3(href='https://www.facebook.com/josmar.mejia') Contacto 3: Marvin Mejia Mejia
+              p 
+                a.grey-text.text-lighten-3(href='https://www.facebook.com/profile.php?id=100000583794553') Contacto 4: Ricardo Villeda 
+
+          .col.l4.offset-l2.s12
+            h5.white-text Redes sociales
+            ul
+              li
+                i(class="fab fa-facebook fa-2x")
+              li
+                i(class="fab fa-twitter fa-2x")
+              li
+                i(class="fab fa-instagram fa-2x")
+              li
+                i(class="fab fa-pinterest-square fa-2x")
+      .footer-copyright
+        .container
+          | © 2018 Copyright Text
+         
+      
+        
+
+  else
+    block contenido
+      main
+        nav
+          .nav-wrapper(style = "background-color: #212129")
+            a.navbar_color(style='margin-left: 1em; font-size: 1.5em')
+              i.fas.fa-crow
+              | Goth 
+            ul#nav-mobile.right.hide-on-med-and-down
+              li
+                a.navbar_color(href='users/logout') Log out
+      ul#slide-out.sidenav.sidenav-fixed( style='margin-top: 66px; height: 100%; background-color: 	#212129')
+        .perfill
+          div(style='border-right: solid 1px white; padding-right: 1.5em;')
+            img.circle(src=JSON.parse(session.user).imagen, alt='images/pf.png', style='height: 90px; width: 90px')
+          div(style='display: flex; flex-direction:column; flex-wrap:wrap')
+            div
+              p(style='margin: 0.43em; color: white; font-size: 1.5em') #{JSON.parse(session.user).username}
+            div
+              p(style='margin: 1em; color: white; font-size: 0.7em') #{JSON.parse(session.user).email}
+        li
+          a(href='/recordatorio', style='border-bottom: solid 1px white; color: white; border-top: solid 1px white')
+            i.far.fa-sticky-note(style = "margin: 0; color: white")
+            span Crear Recordatorio
+        li
+          a(href='/foro', style='border-bottom: solid 1px white; color: white')
+            i.fab.fa-forumbee(style = "margin: 0; color: white")
+            span Crear Foro
+        li
+          a(href='/profile' style="color: white") 
+            i.fas.fa-cog(style = "margin: 0; color: white")
+            span Settings
+      .cards
+        #div123.col.s12.m7(style = "position: relative")
+          
+      section#sec1(action="/api/post", method="GET")
+        ul.pagination(style='position: absolute; left: 25%; bottom: 0')
+          li.waves-effect
+            a(href='#!' onClick='mostrar0(0,3,1)') 1
+          li.waves-effect
+            a(href='#!' onClick='mostrar0(3,6,2)') 2
+          li.waves-effect
+            a(href='#!' onClick='mostrar0(6,9,3)') 3
+          li.waves-effect
+            a(href='#!' onClick='mostrar0(9,12,4)') 4
+          li.waves-effect
+            a(href='#!' onClick='mostrar0(15,18,5)') 5

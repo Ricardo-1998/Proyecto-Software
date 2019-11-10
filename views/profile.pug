@@ -1,0 +1,29 @@
+extends nav
+block contentMain
+    div(class="row")
+        div(class="col s12 m4 l3")
+            ul(class="collapsible side-nav")
+                li(class="bold")
+                    a(class="collapsible-header #00897b teal-text darken-1-text" href="/profile/General") 
+                        i(class="material-icons prefix") settings
+                        span Opciones generales                   
+                li(class="bold")
+                    a(class="collapsible-header #00897b teal-text darken-1-text" href="/profile/Seguridad") 
+                        i(class="material-icons prefix") security 
+                        span Seguridad
+                li(class="bold")
+                    a(class="collapsible-header #00897b teal-text darken-1-text" onClick='global()' )
+                        i(class="material-icons prefix") content_copy
+                        span Contenido  
+                    div(class="collapsible-body #ffffff white")
+                        ul
+                            a(class="#00897b teal-text darken-1-text" href="/profile/Foros")
+                                li
+                                    i(class="material-icons prefix") pageview 
+                                    span Foros      
+                            a(class="#00897b teal-text darken-1-text" href="/profile/Hilos")    
+                                li
+                                    i(class="material-icons prefix fab fa-forumbee") 
+                                    span Hilos
+        div(class="col s12 m8 l9")
+            block content2

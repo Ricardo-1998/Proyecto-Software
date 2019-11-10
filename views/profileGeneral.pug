@@ -1,0 +1,45 @@
+extends profile
+block content2
+    form(class="col s12" method="post" action="" enctype="multipart/form-data")
+        div(class="row card" style="padding:1.5rem;")
+            div(class="col s12 offset-s3")
+                h2 OPCIONES GENERALES
+            div(class="col s5")
+                img.circle(src=JSON.parse(session.user).imagen, alt='/images/pf.png', style='height: 250px; width: 250px')
+                div(class="file-field input-field")
+                    div(class="btn")
+                        span Cambiar
+                        input(id="imagen" type="file" name="imagen")
+                    div(class="file-path-wrapper")
+                        input(class="file-path validate" for="imagen" type="text")
+            div(class="input-field col s6")
+                i(class="material-icons prefix") person
+                input(id="icon_name" value=JSON.parse(session.user).nombre disabled type="text" class="validate enable" name="name")
+                label(for="icon_name") Nombre
+            div(class="input-field col s6")
+                i(class="material-icons prefix") email
+                input(id="icon_telephone" value=JSON.parse(session.user).email disabled  type="email" class="validate enable" name="email")
+                label(for="icon_telephone") E-mail
+            div(class="input-field col s6")
+                i(class="material-icons prefix") portrait
+                input(id="icon_mote" value=JSON.parse(session.user).username disabled  type="text" class="validate enable" name="username")
+                label(for="icon_mote") Mote
+            div(class="col s6")
+                a(class="waves-effect waves-light btn" onClick="Enable();")
+                    i(class="material-icons left") create
+                    span Cambiar datos
+            div(class="col s12")
+                h3 Cambiar tipo de cuenta
+                p
+                    label
+                        input(name="group1" type="radio" checked)
+                        span Cuenta para lector
+
+                p
+                    label
+                        input(name="group1" type="radio")
+                        span Cuenta tipo 2
+            div(class="col s12 offset-s9")
+                button(class="btn waves-effect waves-light" type="submit" name="action")
+                    span Submit
+                    i(class="material-icons right") send

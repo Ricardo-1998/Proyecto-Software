@@ -1,0 +1,34 @@
+extends nav
+block contentMain
+    div(class="row")
+        div(class="col s3 card" style="padding:2rem;margin-right: 1rem;" name="postForm")
+            div(class="input-field col s10 offsite-s1")
+                input(id="nombre" type="text" class="validate")
+                label(for="nombre") Recordatorio
+            
+            div(class="col s10 offsite-s3")
+                a(class="waves-effect waves-light btn" type="button" onClick="guardar()")
+                    i(class="material-icons right") create
+                    span Agregar
+        form(class="col s8 card" style="padding:2rem;" method="post" action="/recordatorio/" enctype="multipart/form-data")
+                div(class="col s4 offset")
+                    img(name="imagenPlaylist" class="materialboxed" width="400" src="/images/playlist.png")
+                    div(class="file-field input-field")
+                        div(class="btn")
+                            span Cambiar
+                            input(id="archivo" name="archivo" type="file")
+                        div(class="file-path-wrapper")
+                            input(class="file-path validate" for="archivo" type="text")
+                div(class="input-field col s6 offset-s2")
+                    input(id="titulo" name="titulo" type="text" class="validate")
+                    label(for="titulo") Titulo
+                div(class="col s12")
+                    table
+                        thead
+                            th Recordatorio
+                        tbody(class="posts") 
+                div(class = "col s4 offset-s10" style="margin-top: 1rem;")
+                    button(class="btn waves-effect waves-light" type="submit" name="action")
+                        span POST
+                        i(class="material-icons right") send
+    script(src="/js/main.js")
