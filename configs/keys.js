@@ -1,6 +1,6 @@
 module.exports = {
     mongodb:
     {
-        URI: 'mongodb://localhost:27017/SOFT'
+        URI:'mongodb://peche:peche123@ds233288.mlab.com:33288/goth'
     }
 }
