@@ -8,8 +8,7 @@ block content2
                 img.circle(src=JSON.parse(session.user).imagen, alt='/images/pf.png', style='height: 250px; width: 250px')
                 div(class="file-field input-field")
                     div(class="btn")
-                        i(class="material-icons left") file_upload
-                        span Cambiar foto de perfil
+                        span Cambiar
                         input(id="imagen" type="file" name="imagen")
                     div(class="file-path-wrapper")
                         input(class="file-path validate" for="imagen" type="text")
@@ -24,7 +23,7 @@ block content2
             div(class="input-field col s6")
                 i(class="material-icons prefix") portrait
                 input(id="icon_mote" value=JSON.parse(session.user).username disabled  type="text" class="validate enable" name="username")
-                label(for="icon_mote") Username
+                label(for="icon_mote") Mote
             div(class="col s6")
                 a(class="waves-effect waves-light btn" onClick="Enable();")
                     i(class="material-icons left") create
@@ -42,5 +41,5 @@ block content2
                         span Cuenta tipo 2
             div(class="col s12 offset-s9")
                 button(class="btn waves-effect waves-light" type="submit" name="action")
-                    span Guardar
-                    i(class="material-icons right") done
+                    span Submit
+                    i(class="material-icons right") send

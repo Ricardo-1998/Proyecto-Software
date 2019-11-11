@@ -1,3 +1,4 @@
+
 var express = require('express');
 var router = express.Router();
 var publicacionController = require('../controllers/publicacionController');
@@ -10,6 +11,6 @@ router.post('/', publicacionController.insert);
 router.get('/', publicacionController.getAll);
 
 //delete
-router.delete('/:id', publicacionController.delete);
+router.delete('/:id',publicacionController.delete);
 
-module.exports = router;
+module.exports = router; 

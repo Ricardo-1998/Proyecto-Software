@@ -10,6 +10,6 @@ router.post('/', recordatorioController.insert);
 router.get('/', recordatorioController.getAll);
 
 // Delete
-router.delete('/:id', recordatorioController.delete);
+router.delete('/:id',recordatorioController.delete);
 
-module.exports = router;
+module.exports = router; 
