@@ -9,7 +9,7 @@ controller.insert = function(req,res){
     //Nombre de la imagen
     var extension = req.files.archivo.name;
     if(extension == ""){
-        extension = "recordatorio.png";
+        extension = "pf.png";
     }
     //Data que se guardara en la base
     let data = {
