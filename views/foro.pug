@@ -9,19 +9,20 @@ block contentMain
                     li(class="tab")
                         a(href="#test4" class="active") FORO
             div(class="card-content grey lighten-4")
-                div(id="test4")
+                div(id="test4" class="filtroForo")
                     div(class="row")
-                        div(class="input-field col s10 offset-s1")
-                            input(id="text" type="text" class="validate" name="titulo")
-                            label(for="text") Titulo
+                        .input-field.col.s12
+                            select(id="selecionarTipoForo" name='titulo' required)
+                                option(value='all', disabled='', selected='') Tipo
+                                option(value='musica') Musica
+                                option(value='juegos') Juegos 
                         div(class="input-field col s10 offset-s1")
                             div(class="card")
                                 div(class="row card-content")
                                     div(class="input-field col s12")
                                         textarea(id="textarea1" class="materialize-textarea tobold toItaliac" name='texto')
-                                        label(for="textarea1") Texto(Opcional)
+                                        label(for="textarea1") 
                         div(class="col s4 offset-s9")
                             button(class="btn waves-effect waves-light" type="submit" name="action1")
                                 span POST
-                                //i(class="material-icons right") send  
                                 i(class="material-icons right") done
