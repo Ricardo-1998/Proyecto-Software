@@ -267,56 +267,60 @@ function mostrar0(cant1,cant2,estado) {
 
 function alerta() {
     let data1 = document.getElementById("filtro").value;
-    let contP = 0;
-    fetch('/api/post', {
-        method: "GET"
-    }).then(res => res.json())
-        .then(response => {
-            //var respo = [];   
-            // respo.add(response[i])
-            let parent = document.getElementById("sec1");
-            while (parent.firstChild) {
-                parent.removeChild(parent.firstChild);
-            };
-            parent.innerHTML = `<ul class="pagination" style="position: absolute; left: 25%; bottom: 0;">                           
-                                    <li class="waves-effect"><a href="#!" onClick="mostrar0(0,3,1)">1</a></li>
-                                    <li class="waves-effect"><a href="#!" onClick="mostrar0(3,6,2)">2</a></li>
-                                    <li class="waves-effect"><a href="#!" onClick="mostrar0(6,9,3)">3</a></li>
-                                    <li class="waves-effect"><a href="#!" onClick="mostrar0(9,12,4)">4</a></li>
-                                    <li class="waves-effect"><a href="#!" onClick="mostrar0(12,15,5)">5</a></li>
-                                </ul>`;
-            let cont = 1;
-            let aux=0;
-            let cantP=0;
-            do{
-                let idd = 'modal';
-                let hash = '#';
-                console.log(response.posts);
-                if(data1==(response.posts[aux]).titulo){
-                    let data = {
-                        tit: (response.posts[aux]).titulo,
-                        cuer: (response.posts[aux]).texto,
-                        aut: (response.posts[aux]).autor
-                    };
-                    let tbody = document.getElementById("sec1");
-                    let div = document.createElement("div");
-                    div.innerHTML = `<div class="sectionn">
-                                        <div class="">
-                                        <div class="card-panel" style = "background-color: #40445a">
-                                        <a class="linkss waves-effect waves-light btn modal-trigger" href="${hash + idd + cont}">
-                                            ${data.tit}</a>
-                                        <a class="linkss waves effect waves-light">${data.aut}</a>
-                                        <p>${data.cuer}</p>       
+    if(data1!="all"){
+        let contP = 0;
+        fetch('/api/post', {
+            method: "GET"
+        }).then(res => res.json())
+            .then(response => {
+                //var respo = [];   
+                // respo.add(response[i])
+                let parent = document.getElementById("sec1");
+                while (parent.firstChild) {
+                    parent.removeChild(parent.firstChild);
+                };
+                parent.innerHTML = `<ul class="pagination" style="position: absolute; left: 25%; bottom: 0;">                           
+                                        <li class="waves-effect"><a href="#!" onClick="mostrar0(0,3,1)">1</a></li>
+                                        <li class="waves-effect"><a href="#!" onClick="mostrar0(3,6,2)">2</a></li>
+                                        <li class="waves-effect"><a href="#!" onClick="mostrar0(6,9,3)">3</a></li>
+                                        <li class="waves-effect"><a href="#!" onClick="mostrar0(9,12,4)">4</a></li>
+                                        <li class="waves-effect"><a href="#!" onClick="mostrar0(12,15,5)">5</a></li>
+                                    </ul>`;
+                let cont = 1;
+                let aux=0;
+                let cantP=0;
+                do{
+                    let idd = 'modal';
+                    let hash = '#';
+                    console.log(response.posts);
+                    if(data1==(response.posts[aux]).titulo){
+                        let data = {
+                            tit: (response.posts[aux]).titulo,
+                            cuer: (response.posts[aux]).texto,
+                            aut: (response.posts[aux]).autor
+                        };
+                        let tbody = document.getElementById("sec1");
+                        let div = document.createElement("div");
+                        div.innerHTML = `<div class="sectionn">
+                                            <div class="">
+                                            <div class="card-panel" style = "background-color: #40445a">
+                                            <a class="linkss waves-effect waves-light btn modal-trigger" href="${hash + idd + cont}">
+                                                ${data.tit}</a>
+                                            <a class="linkss waves effect waves-light">${data.aut}</a>
+                                            <p>${data.cuer}</p>       
+                                            </div>
                                         </div>
-                                    </div>
-                                        </div>
-                                    </div>`;
-                    cont = cont + 1;
-                    tbody.appendChild(div);
-                    cantP++;
-                }
-                aux++;
-            }while((aux!=response.posts.length) && (cantP<3))
-            
-        })
+                                            </div>
+                                        </div>`;
+                        cont = cont + 1;
+                        tbody.appendChild(div);
+                        cantP++;
+                    }
+                    aux++;
+                }while((aux!=response.posts.length) && (cantP<3))
+                
+            })
+    }else{mostrar0(0,3,1);}
+    
+    
 }
