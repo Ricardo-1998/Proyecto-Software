@@ -1,3 +1,5 @@
+let cant=0;
+
 function guardar() {
     let data =document.getElementById("nombre").value;
     let tbody = document.getElementsByClassName("posts")[0];
@@ -103,7 +105,7 @@ let app = {
                     }
                     div = `<div class="card" style = "background-color: #40445a">
                                         <div class="card-content cancion3" >
-                                            <img src = "images/${data.img}" style = "width: 100%">
+                                            <img src = "images/${data.img}" style = "width: 100%" onClick="cambioEstado()">
                                             <h5>${data.tit}</h5>
                                             <p>${data.usr}</p>
                                             <table>
@@ -265,7 +267,7 @@ function mostrar0(cant1,cant2,estado) {
         })
 }
 
-function alerta() {
+function filtrado() {
     let data1 = document.getElementById("filtro").value;
     if(data1!="all"){
         let contP = 0;
@@ -323,4 +325,45 @@ function alerta() {
     }else{mostrar0(0,3,1);}
     
     
+}
+
+function  cambioEstado(){
+    cant++;
+    fetch('/api/play', {
+        method: "GET"
+    }).then(res => res.json())
+        .then(response => {
+           
+            if(response.recordatorio.length==cant){
+                cant=0;
+            }
+            let data = {
+                tit: (response.recordatorio[cant]).titulo,
+                img: (response.recordatorio[cant]).imagenExtension,
+                usr: (response.recordatorio[cant]).usuario,
+                galeria: (response.recordatorio[cant]).galeria
+            };
+            let tbody = document.getElementById("div123");
+            tbody.removeChild(tbody.firstChild);
+            let div2 = document.createElement("div");
+            var pub ="";
+            for(let j = 0; j< data.galeria.length; j++){                      
+                var pub = "<tr>"+"<td>"+data.galeria[j].nombre+"</td>"+"</tr>"+pub;
+            }
+            div = `<div class="card" style = "background-color: #40445a">
+                                <div class="card-content cancion3" >
+                                    <img src = "images/${data.img}" style = "width: 100%" onClick="cambioEstado()">
+                                    <h5>${data.tit}</h5>
+                                    <p>${data.usr}</p>
+                                    <table>
+                                        <thead>
+                                            <th>Notas</th>
+                                        </thead>
+                                        <tbody>
+                                        `;
+            div +=pub+"</tbody>"+"</table>"+"</div>"+"</div>"
+            div2.innerHTML = div;
+            tbody.appendChild(div2);
+            
+        })
 }
