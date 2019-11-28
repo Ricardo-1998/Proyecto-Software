@@ -21,7 +21,7 @@
     "mongoose": "^5.7.12",
     "morgan": "~1.9.1",
     "node-gyp": "^6.0.1",
-    "pug": "2.0.4"
+    "pug": "^2.0.4"
   },
   "main": "app.js",
   "devDependencies": {},
