@@ -34,12 +34,12 @@ block content
                   div(class="input-field")
                     input(id="apellido" type='text' name='apellido' required)
                     label(for="apellido" style="font-size:1rem") Apellido
-
-                  .input-field.col.s12
-                    select(id="sexo" name='sexo' required)
-                      option(value='', disabled='', selected='') Sexo
-                      option(value='Masculino') Masculino
-                      option(value='Femenino') Femenino 
+                  div(class="inicio")
+                    .input-field.col.s12
+                      select(id="sexo" name='sexo' required)
+                        option(value='', disabled='', selected='') Sexo
+                        option(value='Masculino') Masculino
+                        option(value='Femenino') Femenino 
 
                   div(class="input-field")
                     input(id="username" type='text' name='username' required)
@@ -52,24 +52,25 @@ block content
                   div(class="input-field")
                       input(id="pass1" type='password' name='password' required)
                       label(for="pass1" style="font-size:1rem") Password
-
-                  .input-field.col.s12
-                    select(id="pregunta" name='pregunta' required)
-                      option(value='', disabled='', selected='') Pregunta de seguridad
-                      option(value='Nombre de mascota de la infancia?') Nombre de mascota de la infancia?
-                      option(value='Nombre de madre?') Nombre de madre?
-                      option(value='Nombre de padre?') Nombre de padre?
-                      option(value='Hobbie favorito?') Hobbie favorito?
+                  div(class="inicio")
+                    .input-field.col.s12
+                      select(id="pregunta" name='pregunta' required)
+                        option(value='', disabled='', selected='') Pregunta de seguridad
+                        option(value='Nombre de mascota de la infancia?') Nombre de mascota de la infancia?
+                        option(value='Nombre de madre?') Nombre de madre?
+                        option(value='Nombre de padre?') Nombre de padre?
+                        option(value='Hobbie favorito?') Hobbie favorito?
 
                   div(class="input-field")
                       input(id="respuesta" type='text' name='respuesta' required)
                       label(for="respuesta" style="font-size:1rem") Respuesta
 
-                  .input-field.col.s12
-                    select(id="cuenta" name='cuenta' required)
-                      option(value='', disabled='', selected='') Tipo de cuenta
-                      option(value='normal') Normal
-                      option(value='musica') Lector 
+                  div(class="inicio")
+                    .input-field.col.s12
+                      select(id="cuenta" name='cuenta' required)
+                        option(value='', disabled='', selected='') Tipo de cuenta
+                        option(value='normal') Normal
+                        option(value='musica') Lector 
                   br
                   input(type='submit' value='Registrar')
     
@@ -145,15 +146,20 @@ block content
         li
           a(href='/recordatorio', style='border-bottom: solid 1px white; color: white; border-top: solid 1px white')
             i.far.fa-sticky-note(style = "margin: 0; color: white")
-            span Crear Recordatorio
+            span Crear Estado
         li
           a(href='/foro', style='border-bottom: solid 1px white; color: white')
             i.fab.fa-forumbee(style = "margin: 0; color: white")
             span Crear Foro
         li
-          a(href='/profile' style="color: white") 
+          a(href='/profile' style='border-bottom: solid 1px white; color: white') 
             i.fas.fa-cog(style = "margin: 0; color: white")
             span Settings
+        li
+          select(id="filtro" name='filtro' onChange='alerta()')
+            option(value='', disabled='', selected='') Filtro
+            option(value='musica') Musica
+            option(value='juegos') Juegos
       .cards
         #div123.col.s12.m7(style = "position: relative")
           
