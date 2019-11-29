@@ -115,10 +115,31 @@ describe('Unit Testing  -  Goth: Sitio de Foros', function () {
 
     describe('Historia de Usuario: Como usuario necesito tener una contraseña para garantizar que mis datos estén seguros', function () {
         //Test-cases
-        it('');
-        it('');
+        it('Poder logearme con las credenciales de un usuario', function(done){
+            chai.request(app)
+                .post('/users/signin')
+                .send({
+                    email: 'marvin1234@gmail',
+                    password: 'marvin1234'
+                })
+                .end(function (err, res) {
+                    res.should.be.html;
+                    done();
+                });
+        });
+        it('Autentificacion con clave unica', function (done) {
+            chai.request(app)
+                .post('/users/signin')
+                .send({
+                    email: 'marvin1234@gmail',
+                    password: 'marvin1235'
+                })
+                .end(function (err, res) {
+                    res.should.be.html;
+                    done();
+                });
+
+        });
     });
-
-
 
 });
