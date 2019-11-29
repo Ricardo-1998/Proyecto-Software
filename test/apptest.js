@@ -113,6 +113,32 @@ describe('Unit Testing  -  Goth: Sitio de Foros', function () {
         it('');
     });
 
+
+    describe('Historia de Usuario: Como usuario quiero poder realizar publicaciones', function(){
+        //Test-cases
+        it('fewefwe',function(done){
+            var agent = chai.request.agent(app);
+            agent.post('/users/signin')
+                .send({
+                    email: 'campos96@gmail',
+                    password: 'pass1234'})
+                .then(function(res){
+                    agent.post('/api/post')
+                        .send({
+                            titulo: 'tituloejemplo',
+                            texto: 'textoejemploloreminrewr'})
+                        .then(function(res2){
+                            // should get status 200, which indicates req.session existence.
+                            res2.should.have.status(200);
+                            done();
+                        });
+                });
+
+        });
+
+    });
+
+
     describe('Historia de Usuario: Como usuario necesito tener una contraseña para garantizar que mis datos estén seguros', function () {
         //Test-cases
         it('Poder logearme con las credenciales de un usuario', function(done){
