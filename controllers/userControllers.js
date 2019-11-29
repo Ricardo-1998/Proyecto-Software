@@ -39,7 +39,7 @@ AuthController.store = async function (req, res) {
             return res.render('error2', { err: error, email: user.email });          
         else {
             //Almacenamos los datos de la consulta en el objeto data
-            //console.log("Deberia de entrar");
+            console.log("Deberia de entrar");
             let data = {
                 userId: user._id.toString(),
                 email: user.email,
@@ -65,9 +65,7 @@ AuthController.store = async function (req, res) {
                 data.userId = hash; // almacenamos la password encriptada
                 //parseamos el objeto json a cadena y lo alamcenamos en la variable session
                 req.session.user = JSON.stringify(data);
-                req.session.cookie.expires = false;
-                req.session.cookie.maxAge = 1 * 60 * 60 * 1000;
-                //console.log(req.session.user);
+                console.log(req.session.user);
                 //nos dirigira a la pagina donde se encuentra el perfil del usuario
                 return res.redirect('/users/profile');
             });
@@ -116,8 +114,6 @@ AuthController.signin = function (req, res,next) {
                 data.userId = hash;
                 //parseamos el objeto a cadena
                 req.session.user = JSON.stringify(data);
-                req.session.cookie.expires = false;
-                req.session.cookie.maxAge = 1 * 60 * 60 * 1000;
                 //si es correcto nos dirigira al perfil del usuario que esta ingresando.
                 return res.redirect('/users/profile');
             });
@@ -160,7 +156,7 @@ AuthController.update = function (req, res) {
         extension = "/images/" + req.files.imagen.name;
     }
     
-    //console.log(extension);
+    console.log(extension);
 
     if(!req.body.name && !req.body.email && !req.body.username){
         var nombre = sessUser.name;
@@ -237,13 +233,13 @@ AuthController.changePassword = function(req, res) {
                             res.status(500);
                             res.json({code:500, err});
                         } else {
-                            //console.log("Contrasena cambiada. Cambios efectuados.")
+                            console.log("Contrasena cambiada. Cambios efectuados.")
                             return res.redirect('/profile/seguridad');
                         }
                     });  
                 });
             } else {
-                //console.log("La password no coincide. Cambios no realizados.");
+                console.log("La password no coincide. Cambios no realizados.");
                 res.redirect('/profile/seguridad');
             }
         }
@@ -251,3 +247,4 @@ AuthController.changePassword = function(req, res) {
 };
 
 module.exports = AuthController;
+
