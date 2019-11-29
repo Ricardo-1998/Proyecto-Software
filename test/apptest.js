@@ -48,9 +48,25 @@ describe('Unit Testing  -  Goth: Sitio de Foros', function () {
                 });
 
         });
-        it('');
-        it('Inicia Sesión sin errores del server', function (done) {
-            let data={
+        it('Se comprueba que se mantiene la sesion conectada', function (done) {
+            var agent = chai.request.agent(app);
+            agent.post('/users/signin')
+                .send({ email: 'acampos@gmail', password: 'pass1234' })
+                .then(function (res) {
+                    agent.get('/users/signin')
+                        .then(function (res2) {
+                            res2.should.have.status(200);
+                            done();
+                        });
+                });
+
+        });
+        
+    });
+    describe('Historia de Usuario: Como usuario necesito crear un perfil dentro del sistema para poder acceder a todas las funcionalidades del mismo', function () {
+        //Test-cases
+        it('Poder crear un usuario nuevo', function (done) {
+            let data = {
                 email: 'marvin1234@gmail',
                 password: 'marvin1234',
                 username: 'marvin',
@@ -74,6 +90,21 @@ describe('Unit Testing  -  Goth: Sitio de Foros', function () {
                 });
 
         });
+        it('Poder logearme con las credenciales del nuevo usuario', function (done) {
+            chai.request(app)
+                .post('/users/signin')
+                .send({
+                    email: 'marvin1234@gmail',
+                    password: 'marvin1234'
+                })
+                .end(function (err, res) {
+                    res.should.have.status(200);
+                    res.should.be.html;
+                    done();
+                });
+
+        });
+        
     });
 
     describe('Historia de Usuario: Como usuario quiero poder realizar publicaciones', function () {
