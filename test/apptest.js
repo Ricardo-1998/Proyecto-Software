@@ -38,7 +38,7 @@ describe('Unit Testing  -  Goth: Sitio de Foros', function () {
             chai.request(app)
                 .post('/users/signin')
                 .send({
-                    email: 'acampos@gmail',
+                    email: 'campos96@gmail',
                     password: 'pass1234'
                 })
                 .end(function (err, res) {
@@ -51,9 +51,9 @@ describe('Unit Testing  -  Goth: Sitio de Foros', function () {
         it('Se comprueba que se mantiene la sesion conectada', function (done) {
             var agent = chai.request.agent(app);
             agent.post('/users/signin')
-                .send({ email: 'acampos@gmail', password: 'pass1234' })
+                .send({ email: 'campos96@gmail', password: 'pass1234' })
                 .then(function (res) {
-                    agent.get('/users/signin')
+                    agent.get('/users/profile')
                         .then(function (res2) {
                             res2.should.have.status(200);
                             done();
@@ -61,6 +61,7 @@ describe('Unit Testing  -  Goth: Sitio de Foros', function () {
                 });
 
         });
+        
         
     });
     describe('Historia de Usuario: Como usuario necesito crear un perfil dentro del sistema para poder acceder a todas las funcionalidades del mismo', function () {
@@ -98,7 +99,6 @@ describe('Unit Testing  -  Goth: Sitio de Foros', function () {
                     password: 'marvin1234'
                 })
                 .end(function (err, res) {
-                    res.should.have.status(200);
                     res.should.be.html;
                     done();
                 });
@@ -119,8 +119,8 @@ describe('Unit Testing  -  Goth: Sitio de Foros', function () {
             chai.request(app)
                 .post('/users/signin')
                 .send({
-                    email: 'marvin1234@gmail',
-                    password: 'marvin1234'
+                    email: 'campos96@gmail',
+                    password: 'pass1234'
                 })
                 .end(function (err, res) {
                     res.should.be.html;
@@ -131,10 +131,11 @@ describe('Unit Testing  -  Goth: Sitio de Foros', function () {
             chai.request(app)
                 .post('/users/signin')
                 .send({
-                    email: 'marvin1234@gmail',
+                    email: 'campso96@gmail',
                     password: 'marvin1235'
                 })
                 .end(function (err, res) {
+                    res.should.have.status(500)
                     res.should.be.html;
                     done();
                 });
