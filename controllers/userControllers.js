@@ -7,7 +7,7 @@ const fs = require('fs.extra');
 
 AuthController.login = function (req, res, next) {
     res.render('signin'); //
-}  
+}
 
 /*nos devuelve la vista signiup para crear al usuario*/
 AuthController.create = function (req, res, next) {
@@ -25,18 +25,20 @@ AuthController.store = async function (req, res) {
             pregunta: req.body.pregunta,
             respuesta: req.body.respuesta
         },
-        nombre:req.body.name,
-        apellido:req.body.apellido,
-        sexo:req.body.sexo,
+        nombre: req.body.name,
+        apellido: req.body.apellido,
+        sexo: req.body.sexo,
         cuenta: req.body.cuenta,
         imagen: '/images/pf.png'
     }
-    
+
     /*almacenando el usuario*/
-    await User.create(user, (error, user) => { 
-        if (error) // si se produce algun error
+    await User.create(user, (error, user) => {
+        if (error) { // si se produce algun error
             //Devolvemos una vista con los mensajes de error
-            return res.render('error2', { err: error, email: user.email });          
+            res.status(500);
+            return res.render('error2', { err: error, email: user.email });
+        }
         else {
             //Almacenamos los datos de la consulta en el objeto data
             //console.log("Deberia de entrar");
@@ -49,9 +51,9 @@ AuthController.store = async function (req, res) {
                     pregunta: user.seguridad.pregunta,
                     respuesta: user.seguridad.respuesta
                 },
-                nombre:user.nombre,
-                apellido:user.apellido,
-                sexo:user.sexo,
+                nombre: user.nombre,
+                apellido: user.apellido,
+                sexo: user.sexo,
                 cuenta: user.cuenta,
                 imagen: user.imagen
             }
@@ -61,7 +63,7 @@ AuthController.store = async function (req, res) {
                 if (err) { //si produce un error
                     next(err); // retornaremos el error
                 }
-                
+
                 data.userId = hash; // almacenamos la password encriptada
                 //parseamos el objeto json a cadena y lo alamcenamos en la variable session
                 req.session.user = JSON.stringify(data);
@@ -82,32 +84,34 @@ AuthController.profile = function (req, res) {
 
 
 /*Para ingresar al sistema*/
-AuthController.signin = function (req, res,next) {
+AuthController.signin = function (req, res, next) {
     var data = {};
     //user autentication es el metodo que nos permitira ingresar al sistema
     User.authenticate(req.body.email, req.body.password, (error, user) => {
         if (error || !user) {
+            res.status(500);
             return res.render('error2', { err: error, email: req.body.email });
             //return res.send("Usuario ya existente");
             //return res.send({ err: error, email: user.email });
         }
         else {
-            data.userId= user._id.toString(),
-            data.email= user.email,
-            data.password=user.password,
-            data.username=user.username,
-            data.seguridad= {
-                pregunta: user.pregunta,
-                respuesta: user.respuesta
-            },
-            data.nombre=user.name,
-            data.apellido=user.apellido,
-            data.sexo=user.sexo,
-            data.cuenta= user.cuenta,
-            data.imagen = user.imagen
+            res.status(200);
+            data.userId = user._id.toString(),
+                data.email = user.email,
+                data.password = user.password,
+                data.username = user.username,
+                data.seguridad = {
+                    pregunta: user.pregunta,
+                    respuesta: user.respuesta
+                },
+                data.nombre = user.name,
+                data.apellido = user.apellido,
+                data.sexo = user.sexo,
+                data.cuenta = user.cuenta,
+                data.imagen = user.imagen
 
-       
-            
+
+
             //este método nos encriptara el userId para que sea alamcenado en la sesion
             bcrypt.hash(data.userId, 10, function (err, hash) {
                 if (err) {
@@ -122,7 +126,7 @@ AuthController.signin = function (req, res,next) {
                 return res.redirect('/users/profile');
             });
 
-            
+
 
         }
     });
@@ -152,23 +156,23 @@ AuthController.update = function (req, res) {
     var sessUser = JSON.parse(sess.user);
     let update = {};
 
-    if(req.files.imagen.name == ""){
+    if (req.files.imagen.name == "") {
         var extension = sessUser.imagen;
     }
 
-    else{
+    else {
         extension = "/images/" + req.files.imagen.name;
     }
-    
+
     //console.log(extension);
 
-    if(!req.body.name && !req.body.email && !req.body.username){
+    if (!req.body.name && !req.body.email && !req.body.username) {
         var nombre = sessUser.name;
         var email = sessUser.email;
         var username = sessUser.username;
     }
 
-    else{
+    else {
         nombre = req.body.name;
         email = req.body.email;
         username = req.body.username;
@@ -187,21 +191,21 @@ AuthController.update = function (req, res) {
     sessUser.username = update.username;
     sessUser.imagen = update.imagen;
 
-    User.updateOne({"email": JSON.parse(req.session.user).email.toString()}, update, function(err){
-        if(err){
+    User.updateOne({ "email": JSON.parse(req.session.user).email.toString() }, update, function (err) {
+        if (err) {
             res.status(500);
-            res.json({code:500, err});
+            res.json({ code: 500, err });
         } else {
 
-            if(extension != ""){
+            if (extension != "") {
                 fs.copy(req.files.imagen.path, "public/" + extension);
             }
 
             req.session.user = JSON.stringify(sessUser);
-            req.session.save(function(err){
-                if(err){
+            req.session.save(function (err) {
+                if (err) {
                     res.status(500);
-                    res.json({code:500, err});
+                    res.json({ code: 500, err });
                 } else {
                     //console.log("Modificacion realizada");
                     res.render('profileGeneral');
@@ -211,17 +215,17 @@ AuthController.update = function (req, res) {
     });
 }
 
-AuthController.changePassword = function(req, res) {
+AuthController.changePassword = function (req, res) {
     var sessUser = JSON.parse(req.session.user);
 
-    bcrypt.compare(req.body.passwordAntigua, JSON.parse(req.session.user).password, function(err, result){
-        if(err){
+    bcrypt.compare(req.body.passwordAntigua, JSON.parse(req.session.user).password, function (err, result) {
+        if (err) {
             res.status(500);
-            res.json({code:500, err});
+            res.json({ code: 500, err });
         } else {
-            if(result == true){                
-                bcrypt.hash(req.body.passwordNueva, 10, function(err, hash){
-                    if(err){
+            if (result == true) {
+                bcrypt.hash(req.body.passwordNueva, 10, function (err, hash) {
+                    if (err) {
                         next(err);
                     }
 
@@ -232,15 +236,15 @@ AuthController.changePassword = function(req, res) {
                         password: hash
                     }
 
-                    User.updateOne({"email": sessUser.email.toString()}, update, function(err){
-                        if(err){
+                    User.updateOne({ "email": sessUser.email.toString() }, update, function (err) {
+                        if (err) {
                             res.status(500);
-                            res.json({code:500, err});
+                            res.json({ code: 500, err });
                         } else {
                             //console.log("Contrasena cambiada. Cambios efectuados.")
                             return res.redirect('/profile/seguridad');
                         }
-                    });  
+                    });
                 });
             } else {
                 //console.log("La password no coincide. Cambios no realizados.");
