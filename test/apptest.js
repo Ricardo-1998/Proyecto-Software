@@ -14,7 +14,6 @@ chai.use(chaiHttp);
 
 // Header principal de las pruebas. describe el sitio web como tal
 describe('Unit Testing  -  Goth: Sitio de Foros', function () {
-    //Inner Header Describe a que historia de usuario se le aplicara Testing
 
     describe('Funcionalidad General del Sitio Web', function () {
         //Test-cases
@@ -27,13 +26,10 @@ describe('Unit Testing  -  Goth: Sitio de Foros', function () {
                     done();
                 })
         });
-        it('');
     });
 
-    //Inner Header Describe a que historia de usuario se le aplicara Testing
     describe('Historia de Usuario: Como usuario quiero poder iniciar sesión una vez para que si cierro la pagina web no me pida iniciar de nuevo,  a menos que yo como usuario le de a la opcion de cerrar sesión', function () {
         //Test-cases
-        var email1 = 'emailprueba';
         it('Inicia Sesión sin errores del server', function (done) {
             chai.request(app)
                 .post('/users/signin')
@@ -59,11 +55,9 @@ describe('Unit Testing  -  Goth: Sitio de Foros', function () {
                             done();
                         });
                 });
-
         });
-        
-        
     });
+
     describe('Historia de Usuario: Como usuario necesito crear un perfil dentro del sistema para poder acceder a todas las funcionalidades del mismo', function () {
         //Test-cases
         it('Poder crear un usuario nuevo', function (done) {
@@ -104,44 +98,57 @@ describe('Unit Testing  -  Goth: Sitio de Foros', function () {
                 });
 
         });
-        
+
     });
 
     describe('Historia de Usuario: Como usuario quiero poder realizar publicaciones', function () {
         //Test-cases
-        it('');
-        it('');
-    });
-
-
-    describe('Historia de Usuario: Como usuario quiero poder realizar publicaciones', function(){
-        //Test-cases
-        it('fewefwe',function(done){
+        it('Poder definir filtros especificos y ver que muestre lo pedido', function (done) {
             var agent = chai.request.agent(app);
             agent.post('/users/signin')
                 .send({
                     email: 'campos96@gmail',
-                    password: 'pass1234'})
-                .then(function(res){
+                    password: 'pass1234'
+                })
+                .then(function (res) {
                     agent.post('/api/post')
                         .send({
                             titulo: 'tituloejemplo',
-                            texto: 'textoejemploloreminrewr'})
-                        .then(function(res2){
+                            texto: 'textoejemploloreminrewr'
+                        })
+                        .then(function (res2) {
                             // should get status 200, which indicates req.session existence.
                             res2.should.have.status(200);
                             done();
                         });
                 });
-
         });
-
+        it('Poder ingresar multiples filtros y que no tengan conflicto', function (done) {
+            var agent = chai.request.agent(app);
+            agent.post('/users/signin')
+                .send({
+                    email: 'campos96@gmail',
+                    password: 'pass1234'
+                })
+                .then(function (res) {
+                    agent.post('/api/post')
+                        .send({
+                            titulo: 'juegos',
+                            texto: 'juegosprueba'
+                        })
+                        .then(function (res2) {
+                            // should get status 200, which indicates req.session existence.
+                            res2.should.have.status(200);
+                            done();
+                        });
+                });
+        });
     });
 
 
     describe('Historia de Usuario: Como usuario necesito tener una contraseña para garantizar que mis datos estén seguros', function () {
         //Test-cases
-        it('Poder logearme con las credenciales de un usuario', function(done){
+        it('Poder logearme con las credenciales de un usuario', function (done) {
             chai.request(app)
                 .post('/users/signin')
                 .send({
@@ -157,7 +164,7 @@ describe('Unit Testing  -  Goth: Sitio de Foros', function () {
             chai.request(app)
                 .post('/users/signin')
                 .send({
-                    email: 'campso96@gmail',
+                    email: 'campos96@gmail',
                     password: 'marvin1235'
                 })
                 .end(function (err, res) {
@@ -169,4 +176,91 @@ describe('Unit Testing  -  Goth: Sitio de Foros', function () {
         });
     });
 
+    describe('Historia de Usuario: Como usuario quiero poder crear estados', function () {
+        //Test-cases
+        it('Poder ver todos mis estados', function (done) {
+            var agent = chai.request.agent(app);
+            agent.post('/users/signin')
+                .send({
+                    email: 'campos96@gmail',
+                    password: 'pass1234'
+                })
+                .then(function (res) {
+                    agent.get('/recordatorio')
+                        .then(function (res2, err) {
+                            // should get status 200, which indicates req.session existence.
+                            if (err) {
+                                console.log(err);
+                            }
+                            else {
+                                res2.should.have.status(200);
+                                done();
+                            }
+                        });
+                });
+        });
+        it('Poder eliminar un estado', function (done) {
+            var agent = chai.request.agent(app);
+            agent.post('/users/signin')
+                .send({
+                    email: 'campos96@gmail',
+                    password: 'pass1234'
+                })
+                .then(function (res) {
+                    agent.get('/api/play')
+                        .send({ params: { id: 1 } })
+                        .then(function (res2, err) {
+                            // should get status 200, which indicates req.session existence.
+                            if (err) {
+                                console.log(err);
+                            }
+                            else {
+                                res2.should.have.status(200);
+                                done();
+                            }
+                        });
+                });
+        });
+    });
+
+    describe('Historia de Usuario: Como usuario deseo poder administrar mis publicaciones y estados', function () {
+        //Test-cases
+        it('Poder crear publicaciones', function (done) {
+            var agent = chai.request.agent(app);
+            agent.post('/users/signin')
+                .send({
+                    email: 'campos96@gmail',
+                    password: 'pass1234'
+                })
+                .then(function (res) {
+                    agent.post('/api/post')
+                        .send({
+                            titulo: 'educacion',
+                            texto: 'educativo'
+                        })
+                        .then(function (res2) {
+                            // should get status 200, which indicates req.session existence.
+                            res2.should.have.status(200);
+                            done();
+                        });
+                });
+        });
+        it('Poder eliminar publicaiones creadas', function (done) {
+            var agent = chai.request.agent(app);
+            agent.post('/users/signin')
+                .send({
+                    email: 'campos96@gmail',
+                    password: 'pass1234'
+                })
+                .then(function (res) {
+                    agent.post('/api/post')
+                        .send({params: { id: 1 } })
+                        .then(function (res2) {
+                            // should get status 200, which indicates req.session existence.
+                            res2.should.have.status(200);
+                            done();
+                        });
+                });
+        });
+    });
 });
