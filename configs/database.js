@@ -4,7 +4,8 @@ const {mongodb} = require('./keys'); //requerimos el archivo de nuestras crenden
 //conexión.
 moongose.connect(mongodb.URI,{ 
     useNewUrlParser: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useUnifiedTopology: true
 })
 .then(db=>console.log('Connection success!!'))
-.catch(err=>console.error(err));
+.catch(err=>console.error(err));    
